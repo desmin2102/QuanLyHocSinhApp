@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Class{% endblock %}
+{% block header %}
+<h1 class="center-header">Danh sách lớp </h1>{% endblock %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div class="container">
+
+    <!-- Bộ lọc Khối và Tìm kiếm -->
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Tìm kiếm tên lớp..." oninput="searchTable()">
+        <select id="filter-grade" onchange="filterByGrade()">
+            <option value="">Chọn Khối</option>
+            {% for grade in grades %}
+                <option value="{{ grade.name }}">{{ grade.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <table class="fl-table" id="class-table">
+        <thead>
+            <tr>
+                <th>Tên Lớp</th>
+                <th>Sĩ Số</th>
+                <th>Khối</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in classes %}
+                <tr data-grade="{{ c.grade.name }}">
+                    <td><a href="{{ url_for('class_detail', class_id=c.id) }}">{{ c.name }}</a></td>
+                    <td>{{ c.siso }}</td>
+                    <td>{{ c.grade.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/lop.js') }}"></script>
+{% endblock %}
+
