@@ -82,13 +82,6 @@ def view_class():
 
     return render_template('class.html', classes=classes, grades=grades, user=user)
 
-@app.route('/class/<int:class_id>')
-def class_detail(class_id):
-    class_obj = Lop.query.get_or_404(class_id)
-    students = class_obj.students
-    user = session.get('user')  # Lấy thông tin người dùng từ session
-    return render_template('class_detail.html', class_obj=class_obj, students=students, user=user)
-
 @app.route("/lop/<int:lop_id>/students", methods=['GET'])
 @login_required
 def get_students_by_lop(lop_id):
